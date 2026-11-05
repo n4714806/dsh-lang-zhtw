@@ -1,68 +1,54 @@
-# dsh-lang-zhtw
+# dsh-lang-zhtw — n4714806 修補版
 
-[DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)（`dsh`）的繁體中文（台灣）語言包。English version: [README.md](README.md)。
+[English](<README.md>) · 上游：[Grasseed/dsh-lang-zhtw](https://github.com/Grasseed/dsh-lang-zhtw)
 
-用 [OpenCC](https://github.com/BYVoid/OpenCC)（`s2twp`：字元＋台灣用詞轉換）加上小規模用詞校正表，把 DSH 內建的簡體中文介面字典轉換成繁體，並在客戶端語言選單註冊 **繁體中文（台灣）**。沒有覆蓋的字串會自動退回內建的簡體字典——安裝這個語言包不會弄壞任何東西。
+修補分支：`patch/plugin-pages-zh-tw`；版本：**1.0.1-patch.1**。
 
-- 目前涵蓋：從 DSH 0.2.1-rc.2 內建介面字典抽出的 **63 個命名空間／2,676 條字串**。
-- 純語言包：只有一個客戶端模組，不需要 Host 服務、不需要建置步驟。
+## 不只主介面，也補上外掛字典
 
-## 安裝
+- 原有 DSH **63 個命名空間／2,676 個鍵**原樣保留。
+- 新增 **Mnemon 1,409 個鍵**（0.5.40）及 **Context／編隊 737 個鍵**（0.81.2）。
+- 合計 **65 個命名空間／4,822 個鍵**。這是字典覆蓋數，不是所有頁面已目視驗證的保證。
+- 字典可重建，建置依賴鎖版；保護插值參數、程式碼、URL 與路徑。
+- 不掃描／替換 DOM，不攔截 locale service，不改寫歷史對話、任務、記憶、工具輸出或使用者輸入。
 
-### Desktop 應用程式
+**已知限制：** Mnemon 部分來源頁與元件 metadata 直接選簡體，沒有查詢語系服務。本版不冒險覆寫它們，完整範圍與上游修正方向見[覆蓋說明](<docs/coverage.md>)。其他未審核外掛、新增字串仍可能回退到簡體。
 
-1. `git clone https://github.com/Grasseed/dsh-lang-zhtw`
-2. 在 DSH Desktop：側欄 **外掛／插件** → **新增外掛** → 選擇 clone 下來的資料夾。
-3. 打開 **設定 → 一般 → 語言**，選擇 **繁體中文（台灣）**。
-
-### 開源 CLI（`npx @deepseek-ai/dsh`）
-
-```sh
-dsh plugin --profile web add github:Grasseed/dsh-lang-zhtw
-```
-
-（desktop profile 由 Electron 應用程式自己管理，請改用應用內的外掛面板。）
-
-### 手動 patch（進階）
-
-在你的 profile `cordis.patch.yml` 加一段：
-
-```yaml
-- insert:
-    - id: lang-zhtw
-      name: '/絕對路徑/dsh-lang-zhtw/index.js'
-```
-
-絕對路徑的列會被直接以 ES module import，而 Node 不能 import 裸目錄——所以要指到 `index.js`，不能只指資料夾。刪掉這段即解除安裝。
-
-## 運作原理
-
-只使用官方語言包 API（[`@deepseek-ai/dsh-client-locale`](https://github.com/deepseek-ai/deepseek-harness)）：
-
-```js
-ctx.locale.addLanguage({ id: 'zh-TW', label: '繁體中文（台灣）', fallback: 'zh' })
-ctx.locale.register(ns, 'zh-TW', dict) // 每個命名空間
-```
-
-查詢鏈為 `zh-TW → zh → en`，未翻的字串安全退回。
-
-## 已知限制
-
-- 少數字串放在元件內嵌的 text map、不走語言註冊系統（例如「模式說明」的長篇指南文字）；這些會退回簡體，只能由上游修正。
-- 用詞來自 OpenCC 的台灣用詞慣例加上一張可維護的校正表（如 `权限 → 權限`、`计划 → 計畫`、`扩展 → 擴展`）。想改用語請調整 `tools/build-plugin.mjs` 的校正表。
-- 字典與版本綁定；升級 DSH 後請重新生成（見下方）。
-
-## 為新版 DSH 重新生成
+## 安裝／更新自己的修補版
 
 ```sh
-# 1. 解開已安裝的 app（macOS 例）
-npx -y @electron/asar extract "/Applications/DeepSeek Harness.app/Contents/Resources/app.asar" /tmp/dsh-asar-x
-# 2. 由每個 register() 呼叫點抽出全部語言字典
-node tools/extract-dicts4.mjs /tmp/dsh-asar-x/dsh
-# 3. OpenCC 轉換並重新產出 client.js（先跑一次 `npm install`）
-node tools/build-plugin.mjs
+git clone --branch patch/plugin-pages-zh-tw https://github.com/n4714806/dsh-lang-zhtw.git
 ```
 
-## 授權
+透過 Desktop 的外掛管理器，將**既有的** `dsh-lang-zhtw` 更新為這個資料夾；或在管理器的 Git 來源使用 `github:n4714806/dsh-lang-zhtw#patch/plugin-pages-zh-tw`。
 
-MIT © 2026 Grasseed
+- 只啟用一份語言包，避免同時註冊 `zh-TW` 衝突。
+- 語言選擇「繁體中文（台灣）」。成品已提交，使用者不必自行 npm install／build。
+- **本次 Git 修補不會自動替換目前 Desktop 的語言包。** 安裝另行確認後，先備份、再檢查管理器結果及原有外掛功能。
+- 不在 Desktop profile 裡直接執行 npm/pnpm，不手改其依賴或設定檔，也不為翻譯順便升級 Mnemon、Context 或模型相關套件。
+
+## 開發與測試（只在這個 repo）
+
+```sh
+npm ci --include=dev --ignore-scripts
+npm run build
+npm test
+```
+
+建置只讀取已提交的字典快照並產生 [client.js](<client.js>)，不再依賴 `/tmp`，也不覆寫套件資訊、圖示、語系 metadata 或 profile。OpenCC、Acorn 都是開發依賴，執行期不需要。
+
+[來源清單](<dictionaries/sources.json>)記錄來源版本、命名空間、binding、artifact SHA-256 與授權。審核新版本的字典註冊方式後，可明確更新快照：
+
+```sh
+node tools/refresh-plugin-source.mjs dsh-mnemon /path/to/package/lib/client.js 0.5.40
+npm run build
+npm test
+```
+
+新抽取器只解析靜態資料，不執行外掛程式。原[主程式字典抽取器](<tools/extract-dicts4.mjs>)保留為舊版參考，不被目前建置流程呼叫；它含動態求值，不可用於不可信 artifact。DSH 主介面字典升版另行審核，不會自動覆蓋。
+
+## 驗證界線
+
+測試使用 mock locale 服務執行真正生成的 Client 模組，涵蓋先／後載入外掛、語系切換、卸載清理、回退、所有鍵與參數保護、歷史內容不被轉換；**不等於真實 Desktop 點擊／畫面驗證**。未升級任何已安裝的 Mnemon／Context。
+
+原語言包保留 MIT © 2026 Grasseed；外掛字典部分各自保留 MIT／Apache-2.0 授權，詳見[第三方聲明](<THIRD_PARTY_NOTICES.md>)。

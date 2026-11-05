@@ -1,0 +1,32 @@
+[
+  {
+    "package": "dsh-mnemon",
+    "version": "0.5.40",
+    "namespace": "mnemon",
+    "binding": "zh",
+    "requiredKey": "tab.label",
+    "sourceFile": "lib/client.js",
+    "sha256": "6d5bc5df00f40c705ca84be78215fc94f85c3a49b163c0c27ae0b6dd59c6e9b5",
+    "license": "MIT",
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/omdsh-dev/dsh-mnemon.git"
+    },
+    "keys": 1409
+  },
+  {
+    "package": "dsh-context",
+    "version": "0.81.2",
+    "namespace": "dsh-context",
+    "binding": "m",
+    "requiredKey": "tab.context",
+    "sourceFile": "lib/client.js",
+    "sha256": "c8d9e342f0ebbad752ac0db86a9abf2d646f18e4a57022a75c3ccd318bd45ec7",
+    "license": "Apache-2.0",
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/bowenliang123/dsh-context.git"
+    },
+    "keys": 737
+  }
+]

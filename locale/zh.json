@@ -1,6 +1,6 @@
 {
   "meta": {
     "title": "繁体中文（台湾）语言包",
-    "description": "用 OpenCC 把 DSH 内建简体中文界面字典转换为台湾繁体并注册为语言包；未覆盖的字符串自动退回内建中文。"
+    "description": "覆盖 DSH 内建界面及 Mnemon、Context 插件的已验证语言字典；保留历史内容，未覆盖字符串安全回退。"
   }
 }
