@@ -1,5 +1,7 @@
 # dsh-lang-zhtw — n4714806 patch
 
+> **This worktree is the uninstalled, unpublished in-place composer conversion candidate `1.0.1-patch.3.input.1`.** See [preview scope](<docs/input-conversion-preview.md>). The patch.3 reader documentation below describes retained functionality, not the new input conversion.
+
 Traditional Chinese (Taiwan) for DeepSeek Harness, including verified plugin UI dictionaries. [繁體中文說明](<README.zh-TW.md>).
 
 Forked from [Grasseed/dsh-lang-zhtw](https://github.com/Grasseed/dsh-lang-zhtw). Patch branch: `patch/plugin-pages-zh-tw`; version **1.0.1-patch.3**.

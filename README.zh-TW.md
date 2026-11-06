@@ -1,5 +1,7 @@
 # dsh-lang-zhtw — n4714806 修補版
 
+> **此工作區為未安裝、未推送的輸入框原地繁簡轉換候選版 `1.0.1-patch.3.input.1`。** 詳見[候選版範圍](<docs/input-conversion-preview.md>)。以下 patch.3 說明是保留的既有閱讀功能，不是本次輸入框轉換。
+
 [English](<README.md>) · 上游：[Grasseed/dsh-lang-zhtw](https://github.com/Grasseed/dsh-lang-zhtw)
 
 修補分支：`patch/plugin-pages-zh-tw`；版本：**1.0.1-patch.3**。

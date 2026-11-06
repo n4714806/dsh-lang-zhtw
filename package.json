@@ -1,6 +1,6 @@
 {
   "name": "dsh-lang-zhtw",
-  "version": "1.0.1-patch.3",
+  "version": "1.0.1-patch.3.input.1",
   "type": "module",
   "license": "MIT",
   "description": "繁體中文（台灣）語言包：涵蓋 DSH 內建介面及 Mnemon、Context 外掛的已驗證語系字典；不修改歷史內容。",
@@ -26,7 +26,8 @@
     "opencc-js": "1.3.1",
     "playwright-core": "1.58.2",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "zod": "4.6.7"
   },
   "exports": {
     ".": "./index.js",

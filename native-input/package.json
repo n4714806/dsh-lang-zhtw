@@ -1,0 +1,15 @@
+{
+  "name": "dsh-native-input-conversion-workbench",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "prepare:patch": "node prepare.mjs",
+    "test": "node --test test/*.test.mjs ../input-owner/owner.test.mjs",
+    "test:electron": "node test/run-electron.mjs"
+  },
+  "devDependencies": {
+    "@electron/asar": "3.4.1",
+    "electron": "45.2.3"
+  }
+}

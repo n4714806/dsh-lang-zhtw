@@ -1,0 +1,7 @@
+node_modules/
+baseline/
+generated/
+.test-generated/
+.electron-test-profile/
+.electron-download-cache/
+installed-asar-before.sha256
