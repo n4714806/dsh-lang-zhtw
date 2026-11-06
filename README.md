@@ -2,14 +2,18 @@
 
 Traditional Chinese (Taiwan) for DeepSeek Harness, including verified plugin UI dictionaries. [繁體中文說明](<README.zh-TW.md>).
 
-Forked from [Grasseed/dsh-lang-zhtw](https://github.com/Grasseed/dsh-lang-zhtw). Patch branch: `patch/plugin-pages-zh-tw`; version **1.0.1-patch.1**.
+Forked from [Grasseed/dsh-lang-zhtw](https://github.com/Grasseed/dsh-lang-zhtw). Patch branch: `patch/plugin-pages-zh-tw`; version **1.0.1-patch.2**.
+
+## Selected-text reader
+
+Select ordinary prose on the original page, then press **Traditional reader** at the bottom right. Toggle Original/Traditional; **Copy original** always uses the source. Native selection copying inside the panel copies the displayed text. No original page/data edits, network conversion or content persistence. Closing releases the panel content. See [reader scope, safeguards and limits](<docs/reader.md>).
 
 ## What's improved
 
 - Keeps the upstream **63 namespaces / 2,676 keys** unchanged.
 - Adds **1,409 Mnemon keys** (0.5.40, namespace `mnemon`) and **737 Context/Fleet keys** (0.81.2, namespace `dsh-context`).
 - Total: **65 namespaces / 4,822 keys**. This is dictionary coverage, not an all-pages visual guarantee.
-- Reproducible Windows/macOS/Linux build from committed snapshots; pinned build-only dependencies and tests.
+- Reproducible Windows/macOS/Linux build from committed snapshots and reader source; pinned development dependencies and tests. The used OpenCC converter is bundled locally, not installed as a runtime dependency.
 - No runtime DOM conversion, service monkey-patching, profile edits, model calls, or historical-content rewriting. Interpolation, code and address tokens are protected.
 
 **Known limit:** some Mnemon source pages and component metadata explicitly choose Simplified Chinese without consulting DSH's locale service. This pack cannot fix those bypasses. See [coverage and validation boundaries](<docs/coverage.md>).

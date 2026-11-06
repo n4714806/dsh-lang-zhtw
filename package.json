@@ -1,10 +1,13 @@
 {
   "name": "dsh-lang-zhtw",
-  "version": "1.0.1-patch.1",
+  "version": "1.0.1-patch.2",
   "type": "module",
   "license": "MIT",
   "description": "繁體中文（台灣）語言包：涵蓋 DSH 內建介面及 Mnemon、Context 外掛的已驗證語系字典；不修改歷史內容。",
-  "scripts": {"build": "node tools/build-plugin.mjs", "test": "node --test test/*.test.mjs"},
+  "scripts": {
+    "build": "node tools/build-plugin.mjs",
+    "test": "node --test test/*.test.mjs"
+  },
   "keywords": [
     "dsh-plugin",
     "deepseek-harness",
@@ -19,7 +22,9 @@
   "author": "Grasseed",
   "devDependencies": {
     "acorn": "8.15.0",
-    "opencc-js": "1.3.1"
+    "esbuild": "0.25.12",
+    "opencc-js": "1.3.1",
+    "playwright-core": "1.58.2"
   },
   "exports": {
     ".": "./index.js",
@@ -35,7 +40,8 @@
     "icon.svg",
     "THIRD_PARTY_NOTICES.md",
     "licenses/*",
-    "docs/coverage.md"
+    "docs/coverage.md",
+    "docs/reader.md"
   ],
   "dsh": {
     "bundle": {

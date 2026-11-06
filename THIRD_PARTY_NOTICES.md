@@ -9,4 +9,7 @@ Modifications by this fork: extract only static UI dictionary data, reformat as 
 
 `dictionaries/source/dsh-context.zh.json` and `dictionaries/source/dsh-mnemon.zh.json` are extracted/reformatted source snapshots. Their translated derivatives are in the generated `client.js`; the respective upstream licenses continue to apply to these portions. Build tools and tests are covered by this repository's MIT license. The package's top-level MIT declaration does not relicense the Apache-2.0 dictionary portions.
 
-Source artifact versions, hashes and namespaces are recorded in `dictionaries/sources.json`. OpenCC and Acorn are build-only npm dependencies, not shipped runtime dependencies; their upstream licenses remain in their npm distributions.
+Source artifact versions, hashes and namespaces are recorded in `dictionaries/sources.json`. Acorn and esbuild are build-only tools. Starting with 1.0.1-patch.2, the browser artifact also bundles the used OpenCC conversion core and cn-to-Traditional dictionary data for the explicit, local selected-text reader. There is no runtime package installation or network fetch.
+
+- **opencc-js 1.3.1** — https://github.com/nk2028/opencc-js — MIT, Copyright (c) 2020-2021 The nk2028 Project. Full text: `licenses/opencc-js-MIT.txt`.
+- **opencc-data**, as distributed by opencc-js 1.3.1 — Apache-2.0. Original notice and full license are preserved in `licenses/opencc-third-party.md`. Bundling/tree-shaking changes packaging, not the dictionary licensing.

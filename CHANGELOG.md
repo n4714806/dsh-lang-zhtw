@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.1-patch.2
+
+- Add an explicit selected-text Traditional reading panel, not whole-page rewriting. Original/Traditional toggle, Copy original, native Escape/focus handling and memory-only content lifetime.
+- Keep original page, data, model inputs and existing exports untouched. Native selection copying inside the panel intentionally copies displayed text.
+- Reject protected selections; preserve recognisable technical tokens; bound text length and DOM traversal; never clone selected DOM.
+- Bundle the used OpenCC core/dictionaries locally with their MIT/Apache notices. Build/browser-test tools remain development-only; no runtime network fetch or additional profile dependencies.
+- Add conversion/privacy/lifecycle regressions and documented browser verification boundaries.
+
 ## 1.0.1-patch.1
 
 - Fork maintained in `n4714806/dsh-lang-zhtw`, branch `patch/plugin-pages-zh-tw`.

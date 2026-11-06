@@ -2,7 +2,11 @@
 
 [English](<README.md>) · 上游：[Grasseed/dsh-lang-zhtw](https://github.com/Grasseed/dsh-lang-zhtw)
 
-修補分支：`patch/plugin-pages-zh-tw`；版本：**1.0.1-patch.1**。
+修補分支：`patch/plugin-pages-zh-tw`；版本：**1.0.1-patch.2**。
+
+## 新增：繁體閱讀面板
+
+在原頁反白一般內文，再按右下角 **繁體閱讀**（Hot Restart 上方）。可切換原文／繁體，**複製原文**保留選取時的字串；直接反白面板文字複製，則是顯示文字。原頁與資料不動、不傳網路、不儲存內文；關閉即釋放內容。這不是整頁自動翻譯。詳見[使用方式、保護範圍與限制](<docs/reader.md>)。
 
 ## 不只主介面，也補上外掛字典
 
@@ -10,7 +14,7 @@
 - 新增 **Mnemon 1,409 個鍵**（0.5.40）及 **Context／編隊 737 個鍵**（0.81.2）。
 - 合計 **65 個命名空間／4,822 個鍵**。這是字典覆蓋數，不是所有頁面已目視驗證的保證。
 - 字典可重建，建置依賴鎖版；保護插值參數、程式碼、URL 與路徑。
-- 不掃描／替換 DOM，不攔截 locale service，不改寫歷史對話、任務、記憶、工具輸出或使用者輸入。
+- 不改寫原頁 DOM、不攔截 locale service，不改寫歷史對話、任務、記憶、工具輸出或使用者輸入。閱讀面板只在明確點擊時檢查選取範圍。
 
 **已知限制：** Mnemon 部分來源頁與元件 metadata 直接選簡體，沒有查詢語系服務。本版不冒險覆寫它們，完整範圍與上游修正方向見[覆蓋說明](<docs/coverage.md>)。其他未審核外掛、新增字串仍可能回退到簡體。
 
@@ -35,7 +39,7 @@ npm run build
 npm test
 ```
 
-建置只讀取已提交的字典快照並產生 [client.js](<client.js>)，不再依賴 `/tmp`，也不覆寫套件資訊、圖示、語系 metadata 或 profile。OpenCC、Acorn 都是開發依賴，執行期不需要。
+建置讀取已提交的字典快照與閱讀面板原始碼，產生 [client.js](<client.js>)，不依賴 `/tmp`，也不覆寫套件資訊、圖示、語系 metadata 或 profile。套件只宣告開發依賴；閱讀面板所用 OpenCC 核心與字典已內嵌，不需執行期安裝或網路下載。
 
 [來源清單](<dictionaries/sources.json>)記錄來源版本、命名空間、binding、artifact SHA-256 與授權。審核新版本的字典註冊方式後，可明確更新快照：
 

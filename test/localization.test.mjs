@@ -54,7 +54,7 @@ function mount(order){
  const register=(ns,tag,dict)=>{const id=ns+'|'+tag;assert.ok(!rows.has(id),'duplicate namespace/locale '+id);rows.set(id,dict);return()=>rows.delete(id);};
  const native=()=>{for(const source of json('dictionaries/sources.json')) {register(source.namespace,'zh',json('dictionaries/source/'+source.package+'.zh.json'));register(source.namespace,'en',{probe:'English'});}};
  if(order==='before')native();
- captured.factory().apply({effect:fn=>effects.push(fn()),locale:{addLanguage:({id,fallback})=>{assert.ok(languages.has(fallback));assert.ok(!languages.has(id));languages.add(id);return()=>languages.delete(id);},register}});
+ captured.factory(name=>{assert.equal(name,'react');return {};}).apply({effect:fn=>effects.push(fn()),locale:{addLanguage:({id,fallback})=>{assert.ok(languages.has(fallback));assert.ok(!languages.has(id));languages.add(id);return()=>languages.delete(id);},register,bind:()=>key=>key},slots:{inject:(name,fn)=>{assert.equal(name,'shell.overlay');effects.push(fn());},register:()=>()=>{}}});
  if(order==='after')native();
  const t=(ns,key,params={})=>{const value=rows.get(ns+'|'+active)?.[key]??rows.get(ns+'|zh')?.[key]??rows.get(ns+'|en')?.[key]??key;return value.replace(/\{([\w.]+)\}/g,(raw,k)=>Object.hasOwn(params,k)?params[k]:raw);};
  return {t,rows,effects,languages,setLocale:tag=>{active=tag;}};
