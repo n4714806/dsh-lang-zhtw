@@ -40,6 +40,18 @@ export function convertProse(text, converter) {
     return output+converter(line.slice(offset));
   }).join('')).join('');
 }
-export function readerView(original,mode,converter) {
-  return mode==='original' ? original : convertProse(original,converter);
+export function readerView(original,mode,converters) {
+  if (mode === 'original') return original;
+  if (!['traditional','simplified'].includes(mode)) throw Error('Unknown reader mode');
+  const converter = typeof converters === 'function' && mode === 'traditional' ? converters : converters[mode];
+  if (typeof converter !== 'function') throw Error('Missing reader converter: '+mode);
+  return convertProse(original,converter);
+}
+
+export function contextPointInSelection(selection,event) {
+  if (!selection || selection.isCollapsed || selection.rangeCount !== 1) return false;
+  // Keyboard context-menu invocation has no pointer position.
+  if (event.clientX === 0 && event.clientY === 0) return true;
+  return Array.from(selection.getRangeAt(0).getClientRects()).some(rect =>
+    event.clientX >= rect.left && event.clientX <= rect.right && event.clientY >= rect.top && event.clientY <= rect.bottom);
 }

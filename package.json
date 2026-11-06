@@ -1,6 +1,6 @@
 {
   "name": "dsh-lang-zhtw",
-  "version": "1.0.1-patch.2",
+  "version": "1.0.1-patch.3",
   "type": "module",
   "license": "MIT",
   "description": "繁體中文（台灣）語言包：涵蓋 DSH 內建介面及 Mnemon、Context 外掛的已驗證語系字典；不修改歷史內容。",
@@ -42,8 +42,7 @@
     "icon.svg",
     "THIRD_PARTY_NOTICES.md",
     "licenses/*",
-    "docs/coverage.md",
-    "docs/reader.md"
+    "docs/*.md"
   ],
   "dsh": {
     "bundle": {

@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.1-patch.3
+
+- Add original/traditional/simplified modes, always derived from the immutable original.
+- Add non-cancelling reading action strips for selected page prose and inside the reader. Native context menus are NOT modified/replaced; Shift bypasses strips and existing handled events are respected.
+- Revalidate pending source identity, range, connectivity, protection and text before activation; restore panel focus after keyboard actions.
+- Cache views only for the open capture; initialize directional converters lazily; bundle only required OpenCC core/dictionaries while preserving upstream phrase segmentation.
+- Add directional parity tests and real-React/Edge context, keyboard, stale selection/source and non-cancellation regressions. Electron native popup coexistence still needs manual verification.
+
 ## 1.0.1-patch.2
 
 - Add an explicit selected-text Traditional reading panel, not whole-page rewriting. Original/Traditional toggle, Copy original, native Escape/focus handling and memory-only content lifetime.

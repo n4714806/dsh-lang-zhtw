@@ -3,6 +3,7 @@
 // clipboard: never reads/writes the OS clipboard or sends a chat/model request.
 import {chromium} from 'playwright-core';
 import assert from 'node:assert/strict';
+import {verifyContextActions} from './context-smoke.mjs';
 import {buildSync} from 'esbuild';
 import {fileURLToPath} from 'node:url';
 const address=process.argv[2], fixtureMode=address==='--fixture';
@@ -47,27 +48,29 @@ try{
  const select=async id=>page.evaluate(id=>{const node=document.getElementById(id);const range=document.createRange();range.selectNodeContents(node);const s=window.getSelection();s.removeAllRanges();s.addRange(range);},id);
  const dialog=page.locator('.dsh-zhtw-reader-dialog');const content=page.locator('.dsh-zhtw-reader-content');
  const buttons=dialog.locator('button');
- const close=async()=>{await buttons.nth(0).click();await dialog.waitFor({state:'hidden'});};
+ const waitCleared=()=>page.waitForFunction(()=>document.querySelector('.dsh-zhtw-reader-content').textContent==='');
+ const close=async()=>{await buttons.nth(0).click();await dialog.waitFor({state:'hidden'});await waitCleared();};
  const source='用户消息与头发。路径 C:\\用户\\文件.txt';const translated='用戶消息與頭髮。路徑 C:\\用户\\文件.txt';
+ await verifyContextActions(page,{select,source,translated,dialog,content,launch,close});
  await select('reader-smoke-prose');await launch.click();await dialog.waitFor({state:'visible'});
  assert.equal(await content.textContent(),translated);assert.equal(await page.locator('#reader-smoke-prose').textContent(),source);
  await buttons.nth(1).click();assert.equal(await content.textContent(),source);await buttons.nth(2).click();assert.equal(await content.textContent(),translated);
- await buttons.nth(3).click();assert.deepEqual(await page.evaluate(()=>window.__readerSmoke.writes),[source]);
+ await buttons.nth(4).click();assert.deepEqual(await page.evaluate(()=>window.__readerSmoke.writes),[source]);
  // Native selection observes the displayed Unicode; no global copy interception.
  await content.evaluate(node=>{const r=document.createRange();r.selectNodeContents(node);const s=getSelection();s.removeAllRanges();s.addRange(r);});
  assert.equal(await page.evaluate(()=>getSelection().toString()),translated);
- await page.keyboard.press('Escape');await dialog.waitFor({state:'hidden'});assert.equal(await content.textContent(),'');
+ await page.keyboard.press('Escape');await dialog.waitFor({state:'hidden'});await waitCleared();assert.equal(await content.textContent(),'');
  assert.equal(await launch.evaluate(node=>document.activeElement===node),true);
  for(const id of ['reader-smoke-code','reader-smoke-edit','reader-smoke-mixed']){
-  await select(id);await launch.click();await dialog.waitFor({state:'visible'});assert.equal(await content.textContent(),'');assert.equal(await buttons.nth(3).isDisabled(),true);await close();
+  await select(id);await launch.click();await dialog.waitFor({state:'visible'});assert.equal(await content.textContent(),'');assert.equal(await buttons.nth(4).isDisabled(),true);await close();
  }
  assert.equal(await page.evaluate(()=>window.__readerSmoke.constructors),1,'selected DOM must never be cloned');
  await page.locator('#reader-smoke-input').focus();await page.locator('#reader-smoke-input').selectText();await launch.click();await dialog.waitFor({state:'visible'});assert.equal(await content.textContent(),'');await close();
- await page.evaluate(()=>{window.__readerSmoke.mode='defer';});await select('reader-smoke-prose');await launch.click();await dialog.waitFor({state:'visible'});await buttons.nth(3).click();await close();
+ await page.evaluate(()=>{window.__readerSmoke.mode='defer';});await select('reader-smoke-prose');await launch.click();await dialog.waitFor({state:'visible'});await buttons.nth(4).click();await close();
  await select('reader-smoke-prose');await launch.click();await dialog.waitFor({state:'visible'});
  const noticeBefore=await dialog.locator('[role="status"]').textContent();await page.evaluate(()=>window.__readerSmoke.resolve());
  await page.evaluate(()=>new Promise(requestAnimationFrame));assert.equal(await dialog.locator('[role="status"]').textContent(),noticeBefore,'stale clipboard result ignored');
- await page.evaluate(()=>{window.__readerSmoke.mode='deny';});await buttons.nth(3).click();await page.waitForFunction(()=>document.querySelector('.dsh-zhtw-reader-dialog [role="status"]').textContent.includes('剪貼簿'));
+ await page.evaluate(()=>{window.__readerSmoke.mode='deny';});await buttons.nth(4).click();await page.waitForFunction(()=>document.querySelector('.dsh-zhtw-reader-dialog [role="status"]').textContent.includes('剪貼簿'));
  await close();await context.setOffline(true);await select('reader-smoke-prose');await launch.click();await dialog.waitFor({state:'visible'});assert.equal(await content.textContent(),translated,'converter works offline');await close();await context.setOffline(false);
  for(const colorScheme of ['dark','light']){await page.emulateMedia({colorScheme});await select('reader-smoke-prose');await launch.click();assert.equal(await content.isVisible(),true);await close();}
  await page.setViewportSize({width:390,height:760});await select('reader-smoke-prose');await launch.click();const bounds=await dialog.boundingBox();assert.ok(bounds.x>=0&&bounds.x+bounds.width<=391,'dialog fits narrow viewport');await close();

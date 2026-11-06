@@ -2,11 +2,13 @@
 
 Traditional Chinese (Taiwan) for DeepSeek Harness, including verified plugin UI dictionaries. [繁體中文說明](<README.zh-TW.md>).
 
-Forked from [Grasseed/dsh-lang-zhtw](https://github.com/Grasseed/dsh-lang-zhtw). Patch branch: `patch/plugin-pages-zh-tw`; version **1.0.1-patch.2**.
+Forked from [Grasseed/dsh-lang-zhtw](https://github.com/Grasseed/dsh-lang-zhtw). Patch branch: `patch/plugin-pages-zh-tw`; version **1.0.1-patch.3**.
 
 ## Selected-text reader
 
-Select ordinary prose on the original page, then press **Traditional reader** at the bottom right. Toggle Original/Traditional; **Copy original** always uses the source. Native selection copying inside the panel copies the displayed text. No original page/data edits, network conversion or content persistence. Closing releases the panel content. See [reader scope, safeguards and limits](<docs/reader.md>).
+Select prose, then press **Chinese reader** at the bottom right. Toggle Original/Traditional/Simplified; **Copy original** always uses the original. Right-click selected page prose or the reader to reveal a separate reading action strip. **Native menus are unchanged**; these are not native menu entries and do not steal focus. Shift+right-click bypasses the strips.
+
+Native selection copying inside the panel copies displayed text. No original page/data edits, network conversion or content persistence. Closing releases panel content. See [reader safeguards](<docs/reader.md>) and [optimization assessment](<docs/optimizations.md>).
 
 ## What's improved
 
